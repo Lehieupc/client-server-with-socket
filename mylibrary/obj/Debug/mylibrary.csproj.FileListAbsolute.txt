@@ -1,0 +1,6 @@
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\mylibrary\bin\Debug\mylibrary.dll
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\mylibrary\bin\Debug\mylibrary.pdb
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\mylibrary\obj\Debug\mylibrary.csproj.AssemblyReference.cache
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\mylibrary\obj\Debug\mylibrary.csproj.CoreCompileInputs.cache
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\mylibrary\obj\Debug\mylibrary.dll
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\mylibrary\obj\Debug\mylibrary.pdb
