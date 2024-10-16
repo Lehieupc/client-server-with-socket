@@ -12,42 +12,48 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using mylibrary;
+using System.Threading;
+
 namespace winform
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
         }
-        public string Connsv(string data)
+        private static readonly IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1308);
+        private string ConnSv(string request)
         {
-            var ip = "127.0.0.1";
-            var ipAddress = IPAddress.Parse(ip);
-            int port = 1308;
-            var ipEndPoint = new IPEndPoint(ipAddress, port);
             Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(ipEndPoint);
             NetworkStream stream = new NetworkStream(socket);
-            var reader = new StreamReader(stream);
-            var writer = new StreamWriter(stream);
-            string request = data;
-            writer.WriteLine(request);
-            writer.Flush();
-            string response = reader.ReadLine();
+            NetworkUntil.Writer(stream, request);
+            string response = NetworkUntil.Render(stream);
             socket.Close();
             return response;
         }
-        private void checkBox_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             password.UseSystemPasswordChar = !checkBox.Checked;
         }
 
         private void Sign_in(object sender, EventArgs e)
         {
-            User user = new User(account.Text,password.Text);
-            string data_user = JsonSerializer.Serialize(user);
-            MessageBox.Show(Connsv(data_user),"thong bao",MessageBoxButtons.OK);
+                User user = new User(account.Text, password.Text);
+                string data_user = JsonSerializer.Serialize(user);
+                string response = ConnSv(data_user);
+/*                MessageBox.Show(response, "Thông báo", MessageBoxButtons.OK);*/
+                if (string.Compare(response, "tk hoac mk ko dung", true) != 0)
+                {
+                    Form_chat form_chat = new Form_chat(user);
+                    form_chat.ShowDialog();
+                }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
         }
     }
 }

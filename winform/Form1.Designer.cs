@@ -92,10 +92,11 @@
             this.checkBox.TabIndex = 5;
             this.checkBox.Text = "hiển thị mật khẩu";
             this.checkBox.UseVisualStyleBackColor = true;
-            this.checkBox.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            this.checkBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             // 
             // Form1
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -110,6 +111,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form đăng nhập";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

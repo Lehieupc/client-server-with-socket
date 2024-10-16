@@ -29,3 +29,4 @@ D:\LEHIEU\laptrinhmang\client-server_wf-cs\server\bin\Debug\System.Threading.Tas
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\server\bin\Debug\System.ValueTuple.xml
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\server\bin\Debug\Newtonsoft.Json.dll
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\server\bin\Debug\Newtonsoft.Json.xml
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\server\bin\Debug\mylibrary.dll.config
