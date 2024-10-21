@@ -26,7 +26,7 @@ namespace winform
             Wait_Mess.Start();
             this.user = user;
         }
-        private static readonly IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1308);
+        private static readonly IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.1.1"), 1308);
         private static readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         private static NetworkStream stream;
         private void WaitMess()

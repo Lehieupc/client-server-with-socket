@@ -30,10 +30,10 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.friend = new System.Windows.Forms.GroupBox();
-            this.word_chat = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.word_chat = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -69,30 +69,6 @@
             this.friend.TabStop = false;
             this.friend.Text = "Bạn bè";
             // 
-            // word_chat
-            // 
-            this.word_chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.word_chat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.word_chat.FormattingEnabled = true;
-            this.word_chat.ItemHeight = 16;
-            this.word_chat.Location = new System.Drawing.Point(0, 0);
-            this.word_chat.Name = "word_chat";
-            this.word_chat.Size = new System.Drawing.Size(530, 450);
-            this.word_chat.TabIndex = 4;
-            // 
-            // button1
-            // 
-            this.button1.AutoSize = true;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(437, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 54);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "gửi ";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.textBox1);
@@ -112,13 +88,39 @@
             this.textBox1.Size = new System.Drawing.Size(437, 27);
             this.textBox1.TabIndex = 3;
             // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(437, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 54);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "gửi ";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // word_chat
+            // 
+            this.word_chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.word_chat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.word_chat.FormattingEnabled = true;
+            this.word_chat.ItemHeight = 16;
+            this.word_chat.Location = new System.Drawing.Point(0, 0);
+            this.word_chat.Name = "word_chat";
+            this.word_chat.Size = new System.Drawing.Size(530, 450);
+            this.word_chat.TabIndex = 4;
+            // 
             // Form_chat
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form_chat";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form_chat";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_chat_FormClosed);
             this.Load += new System.EventHandler(this.Form_chat_Load);

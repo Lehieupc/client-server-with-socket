@@ -32,3 +32,4 @@ D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\Client.csproj.CopyC
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\winform.exe
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\winform.pdb
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\bin\Debug\mylibrary.dll.config
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\bin\Debug\Guna.UI2.dll
