@@ -15,38 +15,50 @@ namespace server
 {
     internal class Program
     {
-        // Các 
         private static readonly Dictionary<string, Socket> ConnectedClients = new Dictionary<string, Socket>();
         private static readonly Socket listener = new Socket(SocketType.Stream, ProtocolType.Tcp);
         private static readonly IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, 1308);
         #region Code để check user
-        private static string User_Conn(User user,List<User> users)
+        private static string User_Conn(User user,Database_manager database)
         {
             string response = "";
-            foreach (var user_ in users)
+            string select = $"select password from user_account where user_name = '{user.User_name}'";
+            string insert = $"insert into user_account value(null,'{user.User_name}','{user.Password}')";
+            switch (user.User_comm)
             {
-                if (user_.account == user.account && user_.password == user.password)
-                {
-                    response = $"chao mung {user.account}";
+                case "Login":
+                    if (database.Comm_Str(select) == user.Password)
+                    {
+                        response = $"Chào mừng {user.User_name}";
+                    }
+                    else response = "Tài khoản hoặc mật khâu không đúng";
                     break;
-                }
-                else response = $"tk hoac mk ko dung";
+                case "SignUp":
+                    if (database.Comm_Str(select) == null)
+                    {
+                        database.Comm_Sql(insert, select);
+                        response = $"Đăng kí thành công";
+                    }
+                    else response = "Tên tài khoản đã bị đăng kí";
+                    break;
+                default:
+                    break;
             }
             return response;
         }
         #endregion
 
         #region Code để lắng nghe request của client 
-        private static void Listen_request(Socket socket,NetworkStream stream,List<User> users)
+        private static void Listen_request(Socket socket,NetworkStream stream,Database_manager database)
         {
             while (true)
             {
-                string request = NetworkUntil.Render(stream);
+                string request = NetworkUntil.Reader(stream);
                 try
                 {
                     User user = JsonSerializer.Deserialize<User>(request);
-                    Console.WriteLine($"User (tk : {user.account}, mk : {user.password})");
-                    string response = User_Conn(user, users);
+                    Console.WriteLine($"User (tk : {user.User_name}, mk : {user.Password})");
+                    string response = User_Conn(user,database);
                     NetworkUntil.Writer(stream, response);
                 }
                 catch (JsonException)
@@ -73,13 +85,12 @@ namespace server
         #endregion
         static void Main(string[] args)
         {
-            List<User> users = new List<User>() {
-                new User("hieu","hieule"),
-                new User("minhcuong","minc")
-            };
+            Console.OutputEncoding = Encoding.UTF8;
+            Database_manager database = new Database_manager("127.0.0.1", "project_mess", "root", "");
+            database.OpeDb();
             listener.Bind(ipEndPoint);
             listener.Listen(10);
-            Console.WriteLine("Dang lang nghe client...");
+            Console.WriteLine("Đang lắng nghe client...");
             while (true)
             {
                 #region Code để lắng nghe các client kết nối
@@ -88,7 +99,7 @@ namespace server
                 #endregion
 
                 #region Tạo ra luồng riêng để lắng nghe request của các client
-                Thread thread = new Thread(() => Listen_request(socket,stream,users));
+                Thread thread = new Thread(() => Listen_request(socket,stream,database));
                 thread.Start();
                 #endregion
             }

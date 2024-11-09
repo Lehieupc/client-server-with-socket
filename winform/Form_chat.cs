@@ -11,9 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using winform.user_control;
+using Guna.UI2.WinForms;
 
 namespace winform
 {
+
     public partial class Form_chat : Form
     {
         private User user;
@@ -26,15 +29,26 @@ namespace winform
             Wait_Mess.Start();
             this.user = user;
         }
-        private static readonly IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.1.1"), 1308);
-        private static readonly Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+        private static readonly IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1308);
+        private Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         private static NetworkStream stream;
+        private bool isRunning = true;
+        List<UserControl> chatlist = new List<UserControl>();
         private void WaitMess()
         {
             while (true)
             {
-                string message = NetworkUntil.Render(stream);
-                word_chat.Invoke(new Action(() => word_chat.Items.Add(message)));
+                string message = NetworkUntil.Reader(stream);
+                string[] mess = message.Split(':');
+                panel_chat.Invoke(new Action(() =>
+                {
+                    Chat_box_left chat_box_left = new Chat_box_left();
+                    chat_box_left.LabelName = mess[0];
+                    chat_box_left.LabelChat = mess[1];
+                    chat_box_left.Location = new Point(0, chatlist.Count * chat_box_left.Height);
+                    chatlist.Add(chat_box_left);
+                    panel_chat.Controls.Add(chat_box_left);
+                }));
             }
         }
         private void SendMess(string message)
@@ -43,18 +57,69 @@ namespace winform
         }
         private void Form_chat_Load(object sender, EventArgs e)
         {
-            SendMess(user.account);
+            Avatar avatar = new Avatar();
+            avatar.LabelName = user.User_name;
+            avatar.LabelStatus = "online";
+            avatar.BackColor = Color.FromArgb(36,38,42);
+            avatar.BorderStyle = BorderStyle.None;
+            avatar.Size = new Size(300, 70);
+            //Avatar[] avatars = new Avatar[20];
+            //for (int i = 0;i < avatars.Length; i++)
+            //{
+            //    avatars[i] = new Avatar();
+            //    avatars[i].Location = new Point(0, i * avatar.Height);
+            //    avatars[i].BackColor = Color.FromArgb(58, 59, 64);
+            //    friend_user.Controls.Add(avatars[i]);
+            //}
+            Main_user.Controls.Add(avatar);
+            SendMess(user.User_name);
+        }
+        private void Button_seen_mess(object sender, EventArgs e)
+        {
+            SendMess($"{user.User_name}:{guna2TextBox1.Text}");
+            Chat_box_right chat_box_right = new Chat_box_right();
+            chat_box_right.LabelName = user.User_name;
+            chat_box_right.LabelChat = guna2TextBox1.Text;
+            chat_box_right.Location = new Point(panel_chat.Width- chat_box_right.Width, chatlist.Count * chat_box_right.Height);
+            panel_chat.Controls.Add(chat_box_right);
+            chatlist.Add(chat_box_right);
+            guna2TextBox1.ResetText();
+        }
+        // Khai báo biến để lưu trữ trạng thái kéo
+        #region đoạn code để di chuyển form
+        private bool dragging = false;
+        private Point dragCursorPoint;
+        private Point dragFormPoint;
+
+        // Sự kiện MouseDown trên form để bắt đầu kéo
+        private void Form_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            dragCursorPoint = Cursor.Position;
+            dragFormPoint = this.Location;
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        // Sự kiện MouseMove trên form để thay đổi vị trí khi đang kéo
+        private void Form_MouseMove(object sender, MouseEventArgs e)
         {
-            SendMess($"{user.account}:{textBox1.Text}");
-            word_chat.Items.Add($"Bạn : {textBox1.Text}");
+            if (dragging)
+            {
+                Point diff = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
+                this.Location = Point.Add(dragFormPoint, new Size(diff));
+            }
         }
+
+        // Sự kiện MouseUp trên form để dừng kéo
+        private void Form_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+        }
+        #endregion
 
         private void Form_chat_FormClosed(object sender, FormClosedEventArgs e)
         {
             socket.Close();
+            socket = null;
         }
     }
 }
