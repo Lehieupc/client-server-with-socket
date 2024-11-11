@@ -54,32 +54,43 @@ namespace server
             while (true)
             {
                 string request = NetworkUntil.Reader(stream);
-                try
+                if(request == null)
                 {
-                    User user = JsonSerializer.Deserialize<User>(request);
-                    Console.WriteLine($"User (tk : {user.User_name}, mk : {user.Password})");
-                    string response = User_Conn(user,database);
-                    NetworkUntil.Writer(stream, response);
+                    break;
                 }
-                catch (JsonException)
+                string[] socket_type = request.Split('\n');
+                if (socket_type.Length >= 2)
                 {
-                    if(request != "")
+                    string context_type = socket_type[0];
+                    string body = socket_type[1];
+                    if (context_type == "json")
                     {
-                        string[] mess = request.Split(':');
-                        if (mess.Length >= 2)
+                        User user = JsonSerializer.Deserialize<User>(body);
+                        Console.WriteLine($"User (tk : {user.User_name}, mk : {user.Password})");
+                        string response = User_Conn(user, database);
+                        NetworkUntil.Writer(stream, response);
+                    }
+                    else if(context_type == "string")
+                    {
+                        if (body != "")
                         {
-                            foreach (var connectedclient in ConnectedClients)
+                            string[] mess = body.Split('|');
+                            if (mess.Length >= 2)
                             {
-                                if (connectedclient.Value != socket)
+                                foreach (var connectedclient in ConnectedClients)
                                 {
-                                    NetworkStream client_steam = new NetworkStream(connectedclient.Value);
-                                    NetworkUntil.Writer(client_steam, $"{mess[0]} : {mess[1]}");
+                                    if (connectedclient.Value != socket)
+                                    {
+                                        NetworkStream client_steam = new NetworkStream(connectedclient.Value);
+                                        NetworkUntil.Writer(client_steam, $"{mess[0]} | {mess[1]}");
+                                    }
                                 }
                             }
+                            else ConnectedClients[body] = socket;
                         }
-                        else ConnectedClients[request] = socket;
                     }
                 }
+
             }
         }
         #endregion

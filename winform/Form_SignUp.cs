@@ -26,7 +26,7 @@ namespace winform
             Socket socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(ipEndPoint);
             NetworkStream stream = new NetworkStream(socket);
-            NetworkUntil.Writer(stream, request);
+            NetworkUntil.Writer(stream, "json" ,request);
             string response = NetworkUntil.Reader(stream);
             socket.Close();
             return response;

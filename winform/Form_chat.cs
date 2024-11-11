@@ -39,7 +39,10 @@ namespace winform
             while (true)
             {
                 string message = NetworkUntil.Reader(stream);
-                string[] mess = message.Split(':');
+                if (message == null) {
+                    break;
+                }
+                string[] mess = message.Split('|');
                 panel_chat.Invoke(new Action(() =>
                 {
                     Chat_box_left chat_box_left = new Chat_box_left();
@@ -53,7 +56,7 @@ namespace winform
         }
         private void SendMess(string message)
         {
-            NetworkUntil.Writer(stream, message);
+            NetworkUntil.Writer(stream, "string" ,message);
         }
         private void Form_chat_Load(object sender, EventArgs e)
         {
@@ -63,20 +66,12 @@ namespace winform
             avatar.BackColor = Color.FromArgb(36,38,42);
             avatar.BorderStyle = BorderStyle.None;
             avatar.Size = new Size(300, 70);
-            //Avatar[] avatars = new Avatar[20];
-            //for (int i = 0;i < avatars.Length; i++)
-            //{
-            //    avatars[i] = new Avatar();
-            //    avatars[i].Location = new Point(0, i * avatar.Height);
-            //    avatars[i].BackColor = Color.FromArgb(58, 59, 64);
-            //    friend_user.Controls.Add(avatars[i]);
-            //}
             Main_user.Controls.Add(avatar);
             SendMess(user.User_name);
         }
         private void Button_seen_mess(object sender, EventArgs e)
         {
-            SendMess($"{user.User_name}:{guna2TextBox1.Text}");
+            SendMess($"{user.User_name}|{guna2TextBox1.Text}");
             Chat_box_right chat_box_right = new Chat_box_right();
             chat_box_right.LabelName = user.User_name;
             chat_box_right.LabelChat = guna2TextBox1.Text;
@@ -85,8 +80,8 @@ namespace winform
             chatlist.Add(chat_box_right);
             guna2TextBox1.ResetText();
         }
-        // Khai báo biến để lưu trữ trạng thái kéo
         #region đoạn code để di chuyển form
+        // Khai báo biến để lưu trữ trạng thái kéo
         private bool dragging = false;
         private Point dragCursorPoint;
         private Point dragFormPoint;

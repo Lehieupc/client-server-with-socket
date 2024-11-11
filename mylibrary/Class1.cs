@@ -26,7 +26,15 @@ namespace mylibrary
     }
     public class NetworkUntil
     {
-        public static void Writer(NetworkStream stream,string message) {
+        public static void Writer(NetworkStream stream,string context_type ,string message) {
+            message = $"{context_type}\n{message}";
+            byte[] bytes = Encoding.UTF8.GetBytes(message);
+            stream.Write(bytes, 0, bytes.Length);
+            Console.WriteLine($"data sent: {message} ");
+            stream.Flush();
+        }
+        public static void Writer(NetworkStream stream,string message)
+        {
             byte[] bytes = Encoding.UTF8.GetBytes(message);
             stream.Write(bytes, 0, bytes.Length);
             Console.WriteLine($"data sent: {message} ");
@@ -47,7 +55,7 @@ namespace mylibrary
             }
             catch (Exception)
             {
-                return "";
+                return null;
             }
         }
     }
