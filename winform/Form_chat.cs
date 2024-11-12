@@ -13,10 +13,12 @@ using System.Windows.Forms;
 using System.Threading;
 using winform.user_control;
 using Guna.UI2.WinForms;
+using static Guna.UI2.Native.WinApi;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace winform
 {
-
     public partial class Form_chat : Form
     {
         private User user;
@@ -34,6 +36,7 @@ namespace winform
         private static NetworkStream stream;
         private bool isRunning = true;
         List<UserControl> chatlist = new List<UserControl>();
+        List<Avatar> avatars = new List<Avatar>();
         private void WaitMess()
         {
             while (true)
@@ -58,6 +61,28 @@ namespace winform
         {
             NetworkUntil.Writer(stream, "string" ,message);
         }
+        private void Render_avatar()
+        {
+            Avatar avatar = new Avatar();
+            avatar.LabelName = "test";
+            avatar.LabelStatus = "test";
+            avatar.Location = new Point(0, avatars.Count*avatar.Height);
+            friend_user.Controls.Add(avatar);
+            avatar.MouseDown += (sender, e) =>
+            {
+                panel_chat.Controls.Clear();
+                chatlist.Clear();
+            };
+            foreach (Control control in avatar.Controls)
+            {
+                control.MouseDown += (sender, e) =>
+                {
+                    panel_chat.Controls.Clear();
+                    chatlist.Clear();
+                };
+            }
+            avatars.Add(avatar);
+        }
         private void Form_chat_Load(object sender, EventArgs e)
         {
             Avatar avatar = new Avatar();
@@ -67,6 +92,10 @@ namespace winform
             avatar.BorderStyle = BorderStyle.None;
             avatar.Size = new Size(300, 70);
             Main_user.Controls.Add(avatar);
+            for(int i = 0; i < 10; i++)
+            {
+                Render_avatar();
+            }
             SendMess(user.User_name);
         }
         private void Button_seen_mess(object sender, EventArgs e)
@@ -113,8 +142,9 @@ namespace winform
 
         private void Form_chat_FormClosed(object sender, FormClosedEventArgs e)
         {
-            socket.Close();
-            socket = null;
+            user.User_comm = "Logout";
+            string user_close = JsonSerializer.Serialize(user);
+            NetworkUntil.Writer(stream, "json",user_close);
         }
     }
 }

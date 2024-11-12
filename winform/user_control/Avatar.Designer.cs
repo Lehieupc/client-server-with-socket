@@ -1,4 +1,6 @@
-﻿namespace winform.user_control
+﻿using System.Windows.Forms;
+
+namespace winform.user_control
 {
     partial class Avatar
     {
@@ -45,6 +47,7 @@
             this.guna2HtmlLabel1.Size = new System.Drawing.Size(75, 27);
             this.guna2HtmlLabel1.TabIndex = 1;
             this.guna2HtmlLabel1.Text = "Name";
+            this.guna2HtmlLabel1.Cursor = Cursors.Hand;
             // 
             // guna2HtmlLabel2
             // 
@@ -56,6 +59,7 @@
             this.guna2HtmlLabel2.Size = new System.Drawing.Size(60, 18);
             this.guna2HtmlLabel2.TabIndex = 2;
             this.guna2HtmlLabel2.Text = "Status";
+            this.guna2HtmlLabel2.Cursor = Cursors.Hand;
             // 
             // guna2CirclePictureBox1
             // 
@@ -74,13 +78,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(57)))), ((int)(((byte)(63)))));
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.guna2HtmlLabel2);
             this.Controls.Add(this.guna2HtmlLabel1);
             this.Controls.Add(this.guna2CirclePictureBox1);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(53)))));
             this.Name = "Avatar";
-            this.Size = new System.Drawing.Size(280, 70);
+            this.Size = new System.Drawing.Size(278, 68);
             ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
+using System.Runtime.Remoting.Messaging;
 
 namespace mylibrary
 {
@@ -42,21 +43,14 @@ namespace mylibrary
         }
         public static string Reader(NetworkStream stream)
         {
-            try
+            byte[] bytes = new byte[1024];
+            int bytesRead = stream.Read(bytes, 0, bytes.Length);
+            string data = Encoding.UTF8.GetString(bytes, 0, bytesRead);
+            if (data != "")
             {
-                byte[] bytes = new byte[1024];
-                int bytesRead = stream.Read(bytes, 0, bytes.Length);
-                string data = Encoding.UTF8.GetString(bytes, 0, bytesRead);
-                if (data != "")
-                {
-                    Console.WriteLine($"data received: {data} ");
-                }
-                return data;
+                Console.WriteLine($"data received: {data} ");
             }
-            catch (Exception)
-            {
-                return null;
-            }
+            return data;
         }
     }
     public class Database_manager
@@ -84,6 +78,33 @@ namespace mylibrary
         {
             MySqlCommand command = new MySqlCommand(comm, Conn);
             command.ExecuteNonQuery();
+        }
+        public List<int> Comm_Str_List(string select,string cows)
+        {
+            List<int> lists = new List<int>();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(select, Conn);
+                var comstr = cmd.ExecuteReader();
+                if (comstr != null)
+                {
+                    while (comstr.Read())
+                    {
+                        int userId = comstr.GetInt32(cows);
+                        lists.Add(userId);
+                    }
+                    return lists;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+
         }
         public string Comm_Str(string select)
         {
