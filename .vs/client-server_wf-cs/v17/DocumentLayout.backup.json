@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{258825EE-72B6-49E6-8A9F-3861DE90FE48}|server\\Server.csproj|d:\\lehieu\\laptrinhmang\\client-server_wf-cs\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{258825EE-72B6-49E6-8A9F-3861DE90FE48}|server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6D016031-831C-4649-B870-A7116C8F3AE7}|mylibrary\\MyLibrary.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\mylibrary\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6D016031-831C-4649-B870-A7116C8F3AE7}|mylibrary\\MyLibrary.csproj|solutionrelative:mylibrary\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,16 +11,24 @@
       "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\form_chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{258825EE-72B6-49E6-8A9F-3861DE90FE48}|server\\Server.csproj|d:\\lehieu\\laptrinhmang\\client-server_wf-cs\\server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{258825EE-72B6-49E6-8A9F-3861DE90FE48}|server\\Server.csproj|solutionrelative:server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\form_chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\form_chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\avatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\user_control\\avatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\avatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\user_control\\avatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\form_login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\form_login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\avatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\user_control\\avatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\form_login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\chat_box_right.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\user_control\\chat_box_right.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\form_chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|solutionrelative:winform\\form_chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39EAC657-CC87-4FA2-864C-BE74B76BF75A}|winform\\Client.csproj|D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\form_signup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,17 +54,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 292,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\server\\Program.cs",
               "RelativeDocumentMoniker": "server\\Program.cs",
-              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\server\\Program.cs*",
-              "RelativeToolTip": "server\\Program.cs*",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAiwD4AAAAnAAAAAAAAAA==",
+              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\server\\Program.cs",
+              "RelativeToolTip": "server\\Program.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAAAIkAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T08:59:40.317Z",
               "IsPinned": true,
@@ -72,13 +72,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Class1.cs",
               "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\mylibrary\\Class1.cs",
               "RelativeDocumentMoniker": "mylibrary\\Class1.cs",
               "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\mylibrary\\Class1.cs",
               "RelativeToolTip": "mylibrary\\Class1.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAQwFwAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAEUAAAAAAAAAAIAwwFwAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T09:09:54.579Z",
               "IsPinned": true,
@@ -86,32 +86,42 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Form_chat.cs",
               "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_chat.cs",
               "RelativeDocumentMoniker": "winform\\Form_chat.cs",
               "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_chat.cs",
               "RelativeToolTip": "winform\\Form_chat.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwEMAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAYwEYAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T09:28:50.434Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form_chat.cs [Design]",
+              "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_chat.cs",
+              "RelativeDocumentMoniker": "winform\\Form_chat.cs",
+              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_chat.cs [Design]",
+              "RelativeToolTip": "winform\\Form_chat.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-09T09:28:47.131Z",
+              "IsPinned": true,
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Avatar.cs [Design]",
               "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\Avatar.cs",
               "RelativeDocumentMoniker": "winform\\user_control\\Avatar.cs",
               "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\Avatar.cs [Design]",
               "RelativeToolTip": "winform\\user_control\\Avatar.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T17:16:36.703Z"
+              "WhenOpened": "2024-11-11T17:16:36.703Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -122,35 +132,25 @@
               "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_login.cs [Design]",
               "RelativeToolTip": "winform\\Form_login.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-21T16:03:17.773Z"
+              "WhenOpened": "2024-10-21T16:03:17.773Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Form_login.cs",
-              "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_login.cs",
-              "RelativeDocumentMoniker": "winform\\Form_login.cs",
-              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_login.cs",
-              "RelativeToolTip": "winform\\Form_login.cs",
-              "ViewState": "AgIAABUAAAAAMzMzMzMfwCAAAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-21T15:00:43.707Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "Avatar.cs",
               "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\Avatar.cs",
               "RelativeDocumentMoniker": "winform\\user_control\\Avatar.cs",
-              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\Avatar.cs*",
-              "RelativeToolTip": "winform\\user_control\\Avatar.cs*",
+              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\Avatar.cs",
+              "RelativeToolTip": "winform\\user_control\\Avatar.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAADwvykAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T17:16:43.204Z"
+              "WhenOpened": "2024-11-11T17:16:43.204Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Chat_box_right.cs [Design]",
               "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\user_control\\Chat_box_right.cs",
               "RelativeDocumentMoniker": "winform\\user_control\\Chat_box_right.cs",
@@ -161,15 +161,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Form_chat.cs [Design]",
-              "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_chat.cs",
-              "RelativeDocumentMoniker": "winform\\Form_chat.cs",
-              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_chat.cs [Design]",
-              "RelativeToolTip": "winform\\Form_chat.cs [Design]",
+              "DocumentIndex": 7,
+              "Title": "Form_login.cs",
+              "DocumentMoniker": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_login.cs",
+              "RelativeDocumentMoniker": "winform\\Form_login.cs",
+              "ToolTip": "D:\\LEHIEU\\laptrinhmang\\client-server_wf-cs\\winform\\Form_login.cs",
+              "RelativeToolTip": "winform\\Form_login.cs",
+              "ViewState": "AgIAABUAAAAAMzMzMzMfwCAAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-09T09:28:47.131Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-10-21T15:00:43.707Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

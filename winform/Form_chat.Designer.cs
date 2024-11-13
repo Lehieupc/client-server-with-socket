@@ -35,22 +35,26 @@
             this.guna2ControlBox1 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.friend_user = new Guna.UI2.WinForms.Guna2Panel();
+            this.ChatWord = new winform.user_control.Avatar();
             this.Main_user = new Guna.UI2.WinForms.Guna2Panel();
             this.seen_mess = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.panel_chat = new Guna.UI2.WinForms.Guna2Panel();
+            this.panel_chat_with_friend = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel6 = new Guna.UI2.WinForms.Guna2Panel();
-            this.UserName = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.mess_word = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel8 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
+            this.friend_user.SuspendLayout();
             this.Main_user.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
+            this.panel_chat.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
             this.guna2Panel5.SuspendLayout();
             this.SuspendLayout();
@@ -131,11 +135,27 @@
             // friend_user
             // 
             this.friend_user.AutoScroll = true;
+            this.friend_user.Controls.Add(this.ChatWord);
             this.friend_user.Dock = System.Windows.Forms.DockStyle.Fill;
             this.friend_user.Location = new System.Drawing.Point(0, 58);
             this.friend_user.Name = "friend_user";
             this.friend_user.Size = new System.Drawing.Size(304, 602);
             this.friend_user.TabIndex = 6;
+            // 
+            // ChatWord
+            // 
+            this.ChatWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(57)))), ((int)(((byte)(63)))));
+            this.ChatWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ChatWord.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ChatWord.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(53)))));
+            this.ChatWord.LabelName = "Name";
+            this.ChatWord.LabelStatus = "Status";
+            this.ChatWord.Location = new System.Drawing.Point(0, 0);
+            this.ChatWord.Name = "ChatWord";
+            this.ChatWord.Size = new System.Drawing.Size(278, 68);
+            this.ChatWord.TabIndex = 0;
+            this.ChatWord.Load += new System.EventHandler(this.ChatWord_Load);
+            this.ChatWord.Click += new System.EventHandler(this.ChatWord_Click);
             // 
             // Main_user
             // 
@@ -197,16 +217,26 @@
             // panel_chat
             // 
             this.panel_chat.AutoScroll = true;
+            this.panel_chat.Controls.Add(this.panel_chat_with_friend);
             this.panel_chat.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_chat.Location = new System.Drawing.Point(0, 58);
             this.panel_chat.Name = "panel_chat";
             this.panel_chat.Size = new System.Drawing.Size(956, 602);
             this.panel_chat.TabIndex = 2;
             // 
+            // panel_chat_with_friend
+            // 
+            this.panel_chat_with_friend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_chat_with_friend.Location = new System.Drawing.Point(0, 0);
+            this.panel_chat_with_friend.Name = "panel_chat_with_friend";
+            this.panel_chat_with_friend.Size = new System.Drawing.Size(956, 602);
+            this.panel_chat_with_friend.TabIndex = 0;
+            this.panel_chat_with_friend.Visible = false;
+            // 
             // guna2Panel6
             // 
             this.guna2Panel6.BorderColor = System.Drawing.Color.Black;
-            this.guna2Panel6.Controls.Add(this.UserName);
+            this.guna2Panel6.Controls.Add(this.mess_word);
             this.guna2Panel6.Controls.Add(this.guna2Panel8);
             this.guna2Panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.guna2Panel6.Location = new System.Drawing.Point(0, 0);
@@ -214,17 +244,17 @@
             this.guna2Panel6.Size = new System.Drawing.Size(956, 58);
             this.guna2Panel6.TabIndex = 1;
             // 
-            // UserName
+            // mess_word
             // 
-            this.UserName.BackColor = System.Drawing.Color.Transparent;
-            this.UserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UserName.ForeColor = System.Drawing.Color.White;
-            this.UserName.Location = new System.Drawing.Point(15, 12);
-            this.UserName.Name = "UserName";
-            this.UserName.Padding = new System.Windows.Forms.Padding(0, 0, 50, 0);
-            this.UserName.Size = new System.Drawing.Size(166, 27);
-            this.UserName.TabIndex = 1;
-            this.UserName.Text = "@UserName";
+            this.mess_word.BackColor = System.Drawing.Color.Transparent;
+            this.mess_word.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mess_word.ForeColor = System.Drawing.Color.White;
+            this.mess_word.Location = new System.Drawing.Point(15, 12);
+            this.mess_word.Name = "mess_word";
+            this.mess_word.Padding = new System.Windows.Forms.Padding(0, 0, 50, 20);
+            this.mess_word.Size = new System.Drawing.Size(164, 47);
+            this.mess_word.TabIndex = 1;
+            this.mess_word.Text = "Nhóm chung";
             // 
             // guna2Panel8
             // 
@@ -286,10 +316,12 @@
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
             this.guna2Panel2.ResumeLayout(false);
+            this.friend_user.ResumeLayout(false);
             this.Main_user.ResumeLayout(false);
             this.guna2Panel4.ResumeLayout(false);
             this.guna2Panel4.PerformLayout();
             this.guna2Panel3.ResumeLayout(false);
+            this.panel_chat.ResumeLayout(false);
             this.guna2Panel6.ResumeLayout(false);
             this.guna2Panel6.PerformLayout();
             this.guna2Panel5.ResumeLayout(false);
@@ -312,10 +344,12 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel5;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel8;
-        private Guna.UI2.WinForms.Guna2HtmlLabel UserName;
+        private Guna.UI2.WinForms.Guna2HtmlLabel mess_word;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel4;
         private Guna.UI2.WinForms.Guna2Panel friend_user;
         private Guna.UI2.WinForms.Guna2Panel Main_user;
         private Guna.UI2.WinForms.Guna2Button seen_mess;
+        private Guna.UI2.WinForms.Guna2Panel panel_chat_with_friend;
+        private user_control.Avatar ChatWord;
     }
 }

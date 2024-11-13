@@ -12,6 +12,19 @@ using System.Runtime.Remoting.Messaging;
 
 namespace mylibrary
 {
+    public class Friend_user_and_cm_id
+    {
+        public string User_name { get; set; }
+        public string User_status { get; set; }
+        public int Cm_id { get; set; }
+        [JsonConstructor]
+        public Friend_user_and_cm_id(string User_name,string User_status,int Cm_id)
+        {
+            this.User_name = User_name;
+            this.User_status = User_status;
+            this.Cm_id = Cm_id;
+        }
+    }
     public class User
     {
         public string User_comm { get; set; }
@@ -79,9 +92,10 @@ namespace mylibrary
             MySqlCommand command = new MySqlCommand(comm, Conn);
             command.ExecuteNonQuery();
         }
-        public List<int> Comm_Str_List(string select,string cows)
+
+        public List<Dictionary<string, string>> Comm_Cows_List(string select,string cow1,string cow2)
         {
-            List<int> lists = new List<int>();
+            List<Dictionary<string, string>> lists = new List<Dictionary<string, string>>();
             try
             {
                 MySqlCommand cmd = new MySqlCommand(select, Conn);
@@ -90,10 +104,45 @@ namespace mylibrary
                 {
                     while (comstr.Read())
                     {
-                        int userId = comstr.GetInt32(cows);
-                        lists.Add(userId);
+                        Dictionary<string, string> cows = new Dictionary<string, string>();
+                        cows.Add(cow1, comstr.GetString(cow1));
+                        cows.Add(cow2, comstr.GetString(cow2));
+                        lists.Add(cows);
                     }
+                    comstr.Close();
                     return lists;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+
+        }
+        public List<Friend_user_and_cm_id> Comm_Class_List(string select)
+        {
+            List<Friend_user_and_cm_id> friend_User_And_Cm_Ids = new List<Friend_user_and_cm_id>();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(select, Conn);
+                var comstr = cmd.ExecuteReader();
+                if (comstr != null)
+                {
+                    while (comstr.Read())
+                    {
+                        Friend_user_and_cm_id friend_User_And_Cm_Id = new Friend_user_and_cm_id(
+                            comstr.GetString("user_name"),
+                            comstr.GetString("status"),
+                            comstr.GetInt32("conversation_id")
+                            );
+                        friend_User_And_Cm_Ids.Add(friend_User_And_Cm_Id);
+                    }
+                    comstr.Close();
+                    return friend_User_And_Cm_Ids;
                 }
                 else
                 {
@@ -111,6 +160,10 @@ namespace mylibrary
             try
             {
                 MySqlCommand cmd = new MySqlCommand(select,Conn);
+                if (cmd == null)
+                {
+                    return null;
+                }
                 object comstr = cmd.ExecuteScalar();
                 if (comstr != null)
                 {

@@ -54,14 +54,40 @@ namespace server
         }
         #endregion
         #region Code để lấy đoạn chat
-        private static void Friend_chat(string User_name,Database_manager database)
+        private static List<Friend_user_and_cm_id> Friend_chat(string User_name,Database_manager database)
         {
             string select_user_id = $"select user_id from users_account where user_name = '{User_name}'";
-            string select_conversation_id = $"select conversation_id from conversation_members where user_id = {database.Comm_Str(select_user_id)}";
-            foreach(var index in database.Comm_Str_List(select_conversation_id, "conversation_id"))
-            {
-                Console.WriteLine(index);
-            }
+            int user_id = Convert.ToInt32(database.Comm_Str(select_user_id));
+            string select_user_names_and_status_in_conversation = $@"
+                SELECT ua.user_name, ua.status, conversation_id
+                FROM conversation_members cm
+                JOIN users_account ua ON cm.user_id = ua.user_id
+                WHERE cm.conversation_id IN (
+                    SELECT conversation_id 
+                    FROM conversation_members 
+                    WHERE user_id = {user_id}
+                ) AND cm.user_id != {user_id}";
+            return database.Comm_Class_List(select_user_names_and_status_in_conversation);
+        }
+        #endregion
+
+        #region code để lấy tin nhắn
+        private static List<Dictionary<string, string>> Friend_mess(string conversation_id, Database_manager database)
+        {
+            string query = $@"
+                SELECT 
+                    u.user_name AS sender_name,
+                    m.content AS message_content
+                FROM 
+                    messages m
+                JOIN 
+                    users_account u ON m.sender_id = u.user_id
+                WHERE 
+                    m.conversation_id = {conversation_id}
+                ORDER BY 
+                    m.message_id ASC;";
+
+            return database.Comm_Cows_List(query, "sender_name", "message_content");
         }
         #endregion
         #region Code để lắng nghe request của client 
@@ -86,21 +112,46 @@ namespace server
                     else if(context_type == "string")
                     {
                         string[] mess = body.Split('|');
-                        if (mess.Length >= 2)
+                        if (mess.Length == 2)
                         {
-                            foreach (var connectedclient in ConnectedClients)
+                            Friend_mess(mess[1], database);
+                        }
+                        else if (mess.Length >= 3)
+                        {
+                            if (mess[2].ToString() == "mess_word")
                             {
-                                if (connectedclient.Value != socket)
+                                foreach (var connectedclient in ConnectedClients)
                                 {
-                                    NetworkStream client_steam = new NetworkStream(connectedclient.Value);
-                                    NetworkUntil.Writer(client_steam, $"{mess[0]} | {mess[1]}");
+                                    if (connectedclient.Value != socket)
+                                    {
+                                        NetworkStream client_steam = new NetworkStream(connectedclient.Value);
+                                        NetworkUntil.Writer(client_steam, $"word_chat|{mess[0]}|{mess[1]}");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var connectedclient in ConnectedClients)
+                                {
+                                    if (connectedclient.Value != socket && connectedclient.Key == mess[3])
+                                    {
+                                        NetworkStream client_steam = new NetworkStream(connectedclient.Value);
+                                        NetworkUntil.Writer(client_steam, $"friend_chat|{mess[0]}|{mess[1]}");
+                                    }
                                 }
                             }
                         }
                         else 
                         {
                             ConnectedClients[body] = socket;
-                            Friend_chat(body,database);
+                            foreach (var connectedclient in ConnectedClients)
+                            {
+                                if (connectedclient.Value == socket)
+                                {
+                                    string friend_chat = JsonSerializer.Serialize(Friend_chat(body, database));
+                                    NetworkUntil.Writer(stream, friend_chat);
+                                }
+                            }
                         };
                     }
                 }
