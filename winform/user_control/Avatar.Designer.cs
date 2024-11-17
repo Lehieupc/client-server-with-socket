@@ -39,6 +39,7 @@ namespace winform.user_control
             // guna2HtmlLabel1
             // 
             this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.guna2HtmlLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2HtmlLabel1.ForeColor = System.Drawing.Color.White;
             this.guna2HtmlLabel1.Location = new System.Drawing.Point(121, 3);
@@ -47,11 +48,11 @@ namespace winform.user_control
             this.guna2HtmlLabel1.Size = new System.Drawing.Size(75, 27);
             this.guna2HtmlLabel1.TabIndex = 1;
             this.guna2HtmlLabel1.Text = "Name";
-            this.guna2HtmlLabel1.Cursor = Cursors.Hand;
             // 
             // guna2HtmlLabel2
             // 
             this.guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.guna2HtmlLabel2.ForeColor = System.Drawing.Color.White;
             this.guna2HtmlLabel2.Location = new System.Drawing.Point(121, 36);
             this.guna2HtmlLabel2.Name = "guna2HtmlLabel2";
@@ -59,7 +60,6 @@ namespace winform.user_control
             this.guna2HtmlLabel2.Size = new System.Drawing.Size(60, 18);
             this.guna2HtmlLabel2.TabIndex = 2;
             this.guna2HtmlLabel2.Text = "Status";
-            this.guna2HtmlLabel2.Cursor = Cursors.Hand;
             // 
             // guna2CirclePictureBox1
             // 
@@ -85,7 +85,7 @@ namespace winform.user_control
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(53)))));
             this.Name = "Avatar";
-            this.Size = new System.Drawing.Size(278, 68);
+            this.Size = new System.Drawing.Size(280, 68);
             ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -22,30 +22,42 @@ namespace server
         private static string User_Conn(User user,Database_manager database)
         {
             string response = "";
-            string select = $"select password_hash from users_account where user_name = '{user.User_name}'";
+            string select_user_name = $"select password_hash from users_account where user_name = '{user.User_name}'";
             string update_onl = $"update users_account set status = 'online' where user_name = '{user.User_name}'";
             string update_off = $"update users_account set status = 'offline' where user_name = '{user.User_name}'";
-            string insert = $"insert into users_account value(null,'{user.User_name}','{user.Password}','offline')";
+            string insert_user_account = $"insert into users_account value(null,'{user.User_name}','{user.Password}','offline')";
+            string select_list_user_id = $"select user_id from users_account";
             switch (user.User_comm)
             {
                 case "Login":
-                    if (database.Comm_Str(select) == user.Password)
+                    if (database.Comm_Str(select_user_name) == user.Password)
                     {
-                        database.Comm_Sql(update_onl, select);
+                        database.Comm_Sql(update_onl);
                         response = $"Chào mừng {user.User_name}";
                     }
                     else response = "Tài khoản hoặc mật khâu không đúng";
                     break;
                 case "SignUp":
-                    if (database.Comm_Str(select) == null)
+                    if (database.Comm_Str(select_user_name) == null)
                     {
-                        database.Comm_Sql(insert, select);
+                        List<int> list_user_id = database.Comm_Cow_List(select_list_user_id, "user_id");
+                        database.Comm_Sql(insert_user_account);
+                        foreach(var user_id in list_user_id)
+                        {
+                            string insert_friend_blocked = $@"insert into friendships value(
+                                {user_id},
+                                (select user_id from users_account where user_name = '{user.User_name}'),
+                                null,
+                                'blocked'
+                            )";
+                            database.Comm_Sql(insert_friend_blocked);
+                        }
                         response = $"Đăng kí thành công";
                     }
                     else response = "Tên tài khoản đã bị đăng kí";
                     break;
                 case "Logout":
-                    database.Comm_Sql(update_off, select);
+                    database.Comm_Sql(update_off);
                     break;
                 default:
                     break;
@@ -87,9 +99,110 @@ namespace server
                 ORDER BY 
                     m.message_id ASC;";
 
-            return database.Comm_Cows_List(query, "sender_name", "message_content");
+            return database.Comm_Dictionary_List(query, "sender_name", "message_content");
         }
         #endregion
+
+        #region code để lưu tin nhắn vào bảng messages
+        private static void Insert_messages(string Use_name,string content,string conversation_id,Database_manager database)
+        {
+            string query_get_user_id = $"SELECT user_id FROM users_account WHERE user_name = '{Use_name}'";
+            string use_id = database.Comm_Str(query_get_user_id);
+            string query_insert_message = $"INSERT INTO messages (conversation_id, sender_id, content) VALUES ({conversation_id}, {use_id}, '{content}')";
+            database.Comm_Sql(query_insert_message);
+        }
+        #endregion
+
+        #region code để cập nhập bạn bè trong bảng friendship
+        private static void Update_friendships(string user_name,string friend_use_name,string e,Database_manager database)
+        {
+            string query_update_friendships = "";
+            switch (e)
+            {
+                case "add_friend":
+                    query_update_friendships = $@"update friendships set
+                    receiver_id = (select user_id from users_account where user_name = '{user_name}'),
+                    status = 'pending'
+                    where
+                    user_id = LEAST(
+                        (SELECT user_id FROM users_account WHERE user_name = '{user_name}'),
+                        (SELECT user_id FROM users_account WHERE user_name =  '{friend_use_name}')
+                    ) and
+                    friend_id = GREATEST(
+                        (SELECT user_id FROM users_account WHERE user_name = '{user_name}'),
+                        (SELECT user_id FROM users_account WHERE user_name = '{friend_use_name}')
+                    )
+                ";
+                    database.Comm_Sql(query_update_friendships);
+                    break;
+                case "cancel":
+                    query_update_friendships = $@"update friendships set
+                    receiver_id = null),
+                    status = 'blocked'
+                    where
+                    user_id = LEAST(
+                        (SELECT user_id FROM users_account WHERE user_name = '{user_name}'),
+                        (SELECT user_id FROM users_account WHERE user_name =  '{friend_use_name}')
+                    ) and
+                    friend_id = GREATEST(
+                        (SELECT user_id FROM users_account WHERE user_name = '{user_name}'),
+                        (SELECT user_id FROM users_account WHERE user_name = '{friend_use_name}')
+                    )
+                ";
+                    database.Comm_Sql(query_update_friendships);
+                    break;
+                case "accept":
+                    query_update_friendships = $@"update friendships set
+                    status = 'accepted'
+                    where
+                    user_id = LEAST(
+                        (SELECT user_id FROM users_account WHERE user_name = '{user_name}'),
+                        (SELECT user_id FROM users_account WHERE user_name =  '{friend_use_name}')
+                    ) and
+                    friend_id = GREATEST(
+                        (SELECT user_id FROM users_account WHERE user_name = '{user_name}'),
+                        (SELECT user_id FROM users_account WHERE user_name = '{friend_use_name}')
+                    )
+                    ";
+                    string insert_conversations = $@"insert into conversations value(null,'one_to_one');";
+                    database.Comm_Sql(insert_conversations);
+                    string conversation_id_last = database.Comm_Str($@"select LAST_INSERT_ID() from conversations");
+                    string insert_conversation_members = $@"insert into conversation_members value
+                        ({conversation_id_last},
+                        (SELECT user_id FROM users_account WHERE user_name = '{user_name}')),
+                        ({conversation_id_last},
+                        (SELECT user_id FROM users_account WHERE user_name = '{friend_use_name}'))
+                    ";
+                    database.Comm_Sql(insert_conversation_members);
+                    database.Comm_Sql(query_update_friendships);
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
+
+        #region code để lấy ra danh sách kết bạn
+        private static List<Unfriended> Select_friendships(string user_name,Database_manager database)
+        {
+            string select_friendships = $@"
+                SELECT 
+                    CASE 
+                        WHEN f.user_id = (SELECT user_id FROM users_account WHERE user_name = '{user_name}') THEN u2.user_name
+                        ELSE u1.user_name
+                    END AS other_user,
+                    (select user_name from users_account where user_id = receiver_id) as receiver_name,
+                    f.status
+                FROM friendships AS f
+                JOIN users_account AS u1 ON f.user_id = u1.user_id
+                JOIN users_account AS u2 ON f.friend_id = u2.user_id
+                WHERE f.user_id = (SELECT user_id FROM users_account WHERE user_name = '{user_name}') 
+                   OR f.friend_id = (SELECT user_id FROM users_account WHERE user_name = '{user_name}');
+            ";
+            return database.Comm_Unfriended_List(select_friendships);
+        }
+        #endregion
+
         #region Code để lắng nghe request của client 
         private static void Listen_request(Socket socket,NetworkStream stream,Database_manager database)
         {
@@ -106,7 +219,13 @@ namespace server
                         User user = JsonSerializer.Deserialize<User>(body);
                         Console.WriteLine($"User (tk : {user.User_name}, mk : {user.Password})");
                         string response = User_Conn(user, database);
-                        if (user.User_comm == "Logout") break;
+                        if (user.User_comm == "Logout")
+                        {
+                            socket.Close();
+                            socket = null;
+                            ConnectedClients.Remove(user.User_name);
+                            break;
+                        }
                         NetworkUntil.Writer(stream, response);
                     }
                     else if(context_type == "string")
@@ -114,11 +233,16 @@ namespace server
                         string[] mess = body.Split('|');
                         if (mess.Length == 2)
                         {
-                            Friend_mess(mess[1], database);
+                            string list_message = JsonSerializer.Serialize(Friend_mess(mess[1], database));
+                            NetworkUntil.Writer(stream,$"list_message|{list_message}");
                         }
                         else if (mess.Length >= 3)
                         {
-                            if (mess[2].ToString() == "mess_word")
+                            if (mess[0] == "friendship")
+                            {
+                                Update_friendships(mess[2], mess[3], mess[1],database);
+                            }
+                            else if (mess[2] == "mess_word")
                             {
                                 foreach (var connectedclient in ConnectedClients)
                                 {
@@ -131,6 +255,7 @@ namespace server
                             }
                             else
                             {
+                                Insert_messages(mess[0], mess[1], mess[2], database);
                                 foreach (var connectedclient in ConnectedClients)
                                 {
                                     if (connectedclient.Value != socket && connectedclient.Key == mess[3])
@@ -146,10 +271,13 @@ namespace server
                             ConnectedClients[body] = socket;
                             foreach (var connectedclient in ConnectedClients)
                             {
-                                if (connectedclient.Value == socket)
+                                NetworkStream client_stream = new NetworkStream(connectedclient.Value);
+                                string friend_chat = JsonSerializer.Serialize(Friend_chat(connectedclient.Key, database));
+                                NetworkUntil.Writer(client_stream, $"list_friend|{friend_chat}");
+                                if(connectedclient.Value == socket)
                                 {
-                                    string friend_chat = JsonSerializer.Serialize(Friend_chat(body, database));
-                                    NetworkUntil.Writer(stream, friend_chat);
+                                    string list_unfriended = JsonSerializer.Serialize(Select_friendships(body,database));
+                                    NetworkUntil.Writer(stream, $"list_unfriended|{list_unfriended}");
                                 }
                             }
                         };

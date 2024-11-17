@@ -17,6 +17,7 @@ using static Guna.UI2.Native.WinApi;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Messaging;
+using System.Web.UI.WebControls;
 
 namespace winform
 {
@@ -39,80 +40,47 @@ namespace winform
         List<UserControl> chatlist_word = new List<UserControl>();
         List<UserControl> chatlist_friend = new List<UserControl>();
         List<Avatar> avatars = new List<Avatar>();
-        private void WaitMess()
+        private void Panel_chat_word_add(string[] mess)
         {
-            while (true)
+            Chat_box_left chat_box_left = new Chat_box_left();
+            chat_box_left.LabelName = mess[1];
+            chat_box_left.LabelChat = mess[2];
+            int currentY = 0;
+            foreach (Control control in panel_chat.Controls)
             {
-                string message = NetworkUntil.Reader(stream);
-                if (message == null) {
-                    break;
-                }
-                string[] mess = message.Split('|');
-                if (mess.Length >= 3)
+                if (control != panel_chat_with_friend)
                 {
-                    if (mess[0] == "word_chat")
-                    {
-                        panel_chat.Invoke(new Action(() =>
-                        {
-                            Chat_box_left chat_box_left = new Chat_box_left();
-                            chat_box_left.LabelName = mess[1];
-                            chat_box_left.LabelChat = mess[2];
-                            chat_box_left.Location = new Point(0, chatlist_word.Count * chat_box_left.Height);
-                            chatlist_word.Add(chat_box_left);
-                            panel_chat.Controls.Add(chat_box_left);
-                        }));
-                    }
-                    else
-                    {
-                        panel_chat_with_friend.Invoke(new Action(() =>
-                        {
-                            Chat_box_left chat_box_left = new Chat_box_left();
-                            chat_box_left.LabelName = mess[1];
-                            chat_box_left.LabelChat = mess[2];
-                            chat_box_left.Location = new Point(0, chatlist_friend.Count * chat_box_left.Height);
-                            chatlist_friend.Add(chat_box_left);
-                            panel_chat_with_friend.Controls.Add(chat_box_left);
-                        }));
-                    }
-                }
-                else
-                {
-                    friend_user.Invoke(new Action(() =>
-                    {
-                        avatars.Clear();
-                        foreach(Control control in friend_user.Controls)
-                        {
-                            if(control.Name != "ChatWord")
-                            {
-                                friend_user.Controls.Remove(control);
-                            }
-                        }
-                        List<Friend_user_and_cm_id> friends = JsonSerializer.Deserialize<List<Friend_user_and_cm_id>>(message);
-                        foreach(var friend in friends)
-                        {
-                            Render_avatar(friend);
-                        }
-                    }));
+                    currentY = Math.Max(currentY, control.Bottom); // Lấy điểm thấp nhất của các control trong panel
                 }
             }
+            chat_box_left.Location = new Point(0, currentY);
+            chatlist_word.Add(chat_box_left);
+            panel_chat.Controls.Add(chat_box_left);
+            panel_chat.VerticalScroll.Value = panel_chat.VerticalScroll.Maximum;
+            panel_chat.PerformLayout();
         }
-        private void SendMess(string message)
+        private void Panel_chat_with_friend_add(string[] mess)
         {
-           NetworkUntil.Writer(stream, "string", message);
-        }
-        private void avatar_and_control_click(Friend_user_and_cm_id friend_User_And_Cm_Id)
-        {
-            mess_word.Name = friend_User_And_Cm_Id.Cm_id.ToString();
-            mess_word.Text = friend_User_And_Cm_Id.User_name;
-            SendMess($"chatwith|{friend_User_And_Cm_Id.Cm_id}");
-            panel_chat_with_friend.Show();
+            Chat_box_left chat_box_left = new Chat_box_left();
+            chat_box_left.LabelName = mess[1];
+            chat_box_left.LabelChat = mess[2];
+            int currentY = 0;
+            foreach (Control control in panel_chat_with_friend.Controls)
+            {
+                currentY = Math.Max(currentY, control.Bottom); // Lấy điểm thấp nhất của các control trong panel
+            }
+            chat_box_left.Location = new Point(0, currentY);
+            chatlist_friend.Add(chat_box_left);
+            panel_chat_with_friend.Controls.Add(chat_box_left);
+            panel_chat_with_friend.VerticalScroll.Value = panel_chat_with_friend.VerticalScroll.Maximum;
+            panel_chat_with_friend.PerformLayout();
         }
         private void Render_avatar(Friend_user_and_cm_id friend_User_And_Cm_Id)
         {
             Avatar avatar = new Avatar();
             avatar.LabelName = friend_User_And_Cm_Id.User_name;
             avatar.LabelStatus = friend_User_And_Cm_Id.User_status;
-            avatar.Location = new Point(0, (avatars.Count+1)*avatar.Height);
+            avatar.Location = new Point(0, (avatars.Count + 1) * avatar.Height);
             friend_user.Controls.Add(avatar);
             avatar.MouseDown += (sender, e) =>
             {
@@ -127,42 +95,223 @@ namespace winform
             }
             avatars.Add(avatar);
         }
+        private void Render_unfriended(Unfriended unfriended)
+        {
+            Unfriend unfriend = new Unfriend();
+            unfriend.LabelName = unfriended.User_Name;
+            unfriend.Dock = DockStyle.Top;
+            if(unfriended.Status == "pending" && unfriended.Receiver_name == unfriended.User_Name)
+            {
+                unfriend.add_friend.Hide();
+                unfriend.cancel.Hide();
+            }
+            else if (unfriended.Status == "pending" && unfriended.Receiver_name != unfriended.User_Name)
+            {
+                unfriend.add_friend.Hide();
+            }
+            unfriend.add_friend.Click += (sender, e) =>
+            {
+                SendMess($"friendship|add_friend|{user.User_name}|{unfriend.LabelName}");
+            };
+            unfriend.cancel.Click += (sender, e) =>
+            {
+                SendMess($"friendship|cancel|{user.User_name}|{unfriend.LabelName}");
+            };
+            unfriend.refuse.Click += (sender, e) =>
+            {
+                SendMess($"friendship|cancel|{user.User_name}|{unfriend.LabelName}");
+            };
+            unfriend.accept.Click += (sender, e) =>
+            {
+                SendMess($"friendship|accept|{user.User_name}|{unfriend.LabelName}");
+                UnfriendedList.Controls.Remove(unfriend);
+            };
+            UnfriendedList.Controls.Add(unfriend);
+        }
+        private void WaitMess()
+        {
+            while (true)
+            {
+                string response = NetworkUntil.Reader(stream);
+                if (response == null) break;
+                string[] mess = response.Split('|');
+                if (mess.Length >= 3)
+                {
+                    if (mess[0] == "word_chat")
+                    {
+                        panel_chat.Invoke(new Action(() =>
+                        {
+                            Panel_chat_word_add(mess);
+                        }));
+                    }
+                    else
+                    {
+                        if (panel_chat_with_friend.InvokeRequired)
+                        {
+                            panel_chat_with_friend.BeginInvoke(new Action(() =>
+                            {
+                                Panel_chat_with_friend_add(mess);
+                            }));
+                        }
+                        else
+                        {
+                            Panel_chat_with_friend_add(mess);
+                        }
+                    }
+                }
+                else if (mess.Length == 2)
+                {
+                    List<Friend_user_and_cm_id> friends = JsonSerializer.Deserialize<List<Friend_user_and_cm_id>>(mess[1]);
+                    if (mess[0] == "list_friend")
+                    {
+                        avatars.Clear();
+                        friend_user.Invoke(new Action(() =>
+                        {
+                            
+                            foreach (Control control in friend_user.Controls)
+                            {
+                                if (control.Name == "ChatWord" || control == UnfriendedList)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    friend_user.Controls.Remove(control);
+                                }
+                            }
+                            foreach (var friend in friends)
+                            {
+                                Render_avatar(friend);
+                            }
+                        }));
+                    }
+                    else if (mess[0] == "list_unfriended")
+                    {
+                        List<Unfriended> unfriendeds = JsonSerializer.Deserialize<List<Unfriended>>(mess[1]);
+                        UnfriendedList.Invoke(new Action(() =>
+                        {
+                            foreach (var unfriended in unfriendeds)
+                            {
+                                Render_unfriended(unfriended);
+                            }
+                        }));
+                    }
+                    else if (mess[0] == "list_message")
+                    {
+                        List<Dictionary<string, string>> list_message = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(mess[1]);
+                        panel_chat_with_friend.Invoke(new Action(() =>
+                        {
+                            panel_chat_with_friend.Controls.Clear();
+                            chatlist_friend.Clear();
+                            foreach (var message in list_message) {
+                                if (message["sender_name"] != user.User_name)
+                                {
+                                    Chat_box_left chat_box_left = new Chat_box_left();
+                                    chat_box_left.LabelName = message["sender_name"];
+                                    chat_box_left.LabelChat = message["message_content"];
+                                    chat_box_left.Location = new Point(0, chatlist_friend.Count * chat_box_left.Height);
+                                    chatlist_friend.Add(chat_box_left);
+                                    panel_chat_with_friend.Controls.Add(chat_box_left);
+                                }
+                                else
+                                {
+                                    Chat_box_right chat_box_right = new Chat_box_right();
+                                    chat_box_right.LabelName = message["sender_name"];
+                                    chat_box_right.LabelChat = message["message_content"];
+                                    chat_box_right.Location = new Point(panel_chat_with_friend.Width - chat_box_right.Width-20, chatlist_friend.Count * chat_box_right.Height);
+                                    panel_chat_with_friend.Controls.Add(chat_box_right);
+                                    chatlist_friend.Add(chat_box_right);
+                                }
+                            }
+                            panel_chat_with_friend.VerticalScroll.Value = panel_chat_with_friend.VerticalScroll.Maximum;
+                            panel_chat_with_friend.PerformLayout();
+                        }));
+                    }
+                }
+            }
+        }
+        private void SendMess(string message)
+        {
+           NetworkUntil.Writer(stream, "string", message);
+        }
+        private void avatar_and_control_click(Friend_user_and_cm_id friend_User_And_Cm_Id)
+        {
+            mess_word.Name = friend_User_And_Cm_Id.Cm_id.ToString();
+            mess_word.Text = friend_User_And_Cm_Id.User_name;
+            SendMess($"chatwith|{friend_User_And_Cm_Id.Cm_id}");
+            panel_chat.AutoScroll = false;
+            panel_chat_with_friend.Show();
+        }
         private void Form_chat_Load(object sender, EventArgs e)
         {
             Avatar avatar = new Avatar();
-            avatar.Name = "1";
             avatar.LabelName = user.User_name;
             avatar.LabelStatus = "online";
             avatar.BackColor = Color.FromArgb(36,38,42);
-            avatar.BorderStyle = BorderStyle.None;
+            avatar.BorderStyle = System.Windows.Forms.BorderStyle.None;
             avatar.Size = new Size(300, 70);
+            Avatar[] avatars1 = new Avatar[10];
             Main_user.Controls.Add(avatar);
-            Thread thread = new Thread(() => {
-                while (true)
-                {
-                    NetworkUntil.Writer(stream, "string", user.User_name);
-                    Thread.Sleep(30000);
-                }
-            });
-            thread.Start();
+            SendMess(user.User_name);
         }
         private void Button_seen_mess(object sender, EventArgs e)
         {
-            SendMess($"{user.User_name}|{guna2TextBox1.Text}|{mess_word.Name}|{mess_word.Text}");
-            Chat_box_right chat_box_right = new Chat_box_right();
-            chat_box_right.LabelName = user.User_name;
-            chat_box_right.LabelChat = guna2TextBox1.Text;
-            if (mess_word.Name == "mess_word")
+            string test_text = guna2TextBox1.Text.Trim();
+            if (test_text != "")
             {
-                chat_box_right.Location = new Point(panel_chat.Width - chat_box_right.Width, chatlist_word.Count * chat_box_right.Height);
-                panel_chat.Controls.Add(chat_box_right);
-                chatlist_word.Add(chat_box_right);
-            }
-            else
-            {
-                chat_box_right.Location = new Point(panel_chat.Width - chat_box_right.Width, chatlist_friend.Count * chat_box_right.Height);
-                panel_chat_with_friend.Controls.Add(chat_box_right);
-                chatlist_friend.Add(chat_box_right);
+                SendMess($"{user.User_name}|{guna2TextBox1.Text}|{mess_word.Name}|{mess_word.Text}");
+                Chat_box_right chat_box_right = new Chat_box_right();
+                chat_box_right.LabelName = user.User_name;
+                chat_box_right.LabelChat = guna2TextBox1.Text;
+                int currentY = 0;
+                if (mess_word.Name == "mess_word")
+                {
+                    foreach (Control control in panel_chat.Controls)
+                    {
+                        if (control != panel_chat_with_friend)
+                        {
+                            currentY = Math.Max(currentY, control.Bottom); // Lấy điểm thấp nhất của các control trong panel
+                        }
+                    }
+
+                    // Đặt vị trí Y tiếp theo
+                    chat_box_right.Location = new Point(
+                        panel_chat.Width - chat_box_right.Width - 20, // Canh lề phải
+                        currentY
+                    );
+                    panel_chat.Controls.Add(chat_box_right);
+                    panel_chat.VerticalScroll.Value = panel_chat.VerticalScroll.Maximum;
+                    panel_chat.PerformLayout();
+                    chatlist_word.Add(chat_box_right);
+                }
+                else
+                {
+                    foreach (Control control in panel_chat_with_friend.Controls)
+                    {
+                        currentY = Math.Max(currentY, control.Bottom); // Lấy điểm thấp nhất của các control trong panel
+                    }
+
+                    chat_box_right.Location = new Point(panel_chat_with_friend.Width - chat_box_right.Width - 20, currentY);
+
+                    // Kiểm tra nếu đang ở UI thread, nếu không dùng Invoke
+                    if (panel_chat_with_friend.InvokeRequired)
+                    {
+                        panel_chat_with_friend.Invoke(new Action(() =>
+                        {
+                            panel_chat_with_friend.Controls.Add(chat_box_right);
+                            panel_chat_with_friend.VerticalScroll.Value = panel_chat_with_friend.VerticalScroll.Maximum;
+                            panel_chat_with_friend.PerformLayout();
+                        }));
+                    }
+                    else
+                    {
+                        // Nếu đang ở UI thread, trực tiếp thêm control
+                        panel_chat_with_friend.Controls.Add(chat_box_right);
+                        panel_chat_with_friend.VerticalScroll.Value = panel_chat_with_friend.VerticalScroll.Maximum;
+                        panel_chat_with_friend.PerformLayout();
+                    };
+                    chatlist_friend.Add(chat_box_right);
+                }
             }
             guna2TextBox1.ResetText();
         }
@@ -203,10 +352,15 @@ namespace winform
             user.User_comm = "Logout";
             string user_close = JsonSerializer.Serialize(user);
             NetworkUntil.Writer(stream, "json",user_close);
+            socket.Close();
+            socket = null;
         }
         private void ChatWord_Click(object sender, EventArgs e)
         {
             panel_chat_with_friend.Hide();
+            panel_chat.AutoScroll = true;
+            panel_chat.VerticalScroll.Value = panel_chat.VerticalScroll.Maximum;
+            panel_chat.PerformLayout();
             mess_word.Name = "mess_word";
             mess_word.Text = ChatWord.LabelName;
         }
@@ -215,6 +369,22 @@ namespace winform
         {
             ChatWord.LabelName = "Nhóm chung";
             ChatWord.LabelStatus = "online";
+        }
+
+        private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
+        {
+            if (UnfriendedList.Visible == false)
+            {
+                label1.Text = "Lời mời và gợi ý bạn bè";
+                friend_user.AutoScroll = false;
+                UnfriendedList.Show();
+            }
+            else
+            {
+                label1.Text = "Đoạn chat";
+                friend_user.AutoScroll = true;
+                UnfriendedList.Hide();
+            }
         }
     }
 }

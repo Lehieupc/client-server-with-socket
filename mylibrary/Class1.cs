@@ -12,6 +12,18 @@ using System.Runtime.Remoting.Messaging;
 
 namespace mylibrary
 {
+    public class Unfriended
+    {
+        public string User_Name { get; set; }
+        public string Receiver_name { get; set; }
+        public string Status { get; set; }
+        public Unfriended(string User_name, string Receiver_name,string Status)
+        {
+            this.User_Name = User_name;
+            this.Receiver_name = Receiver_name;
+            this.Status = Status;
+        }
+    }
     public class Friend_user_and_cm_id
     {
         public string User_name { get; set; }
@@ -56,14 +68,22 @@ namespace mylibrary
         }
         public static string Reader(NetworkStream stream)
         {
-            byte[] bytes = new byte[1024];
-            int bytesRead = stream.Read(bytes, 0, bytes.Length);
-            string data = Encoding.UTF8.GetString(bytes, 0, bytesRead);
-            if (data != "")
+            try
             {
-                Console.WriteLine($"data received: {data} ");
+                byte[] bytes = new byte[1024*1024];
+                int bytesRead = stream.Read(bytes, 0, bytes.Length);
+                string data = Encoding.UTF8.GetString(bytes, 0, bytesRead);
+                if (data != "")
+                {
+                    Console.WriteLine($"data received: {data} ");
+                }
+                return data;
             }
-            return data;
+            catch
+            {
+                return null;
+            }
+
         }
     }
     public class Database_manager
@@ -87,13 +107,41 @@ namespace mylibrary
                 Console.WriteLine("Loi ket noi" + e.ToString());
             }
         }
-        public void Comm_Sql(string comm,string select)
+        public void Comm_Sql(string comm)
         {
             MySqlCommand command = new MySqlCommand(comm, Conn);
             command.ExecuteNonQuery();
         }
+        public List<int> Comm_Cow_List(string select, string cow1)
+        {
+            List<int> lists = new List<int>();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(select, Conn);
+                var comstr = cmd.ExecuteReader();
+                if (comstr != null)
+                {
+                    while (comstr.Read())
+                    {
+                        int query = comstr.GetInt32(cow1);
+                        lists.Add(query);
+                    }
+                    comstr.Close();
+                    return lists;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
 
-        public List<Dictionary<string, string>> Comm_Cows_List(string select,string cow1,string cow2)
+        }
+
+        public List<Dictionary<string, string>> Comm_Dictionary_List(string select,string cow1,string cow2)
         {
             List<Dictionary<string, string>> lists = new List<Dictionary<string, string>>();
             try
@@ -143,6 +191,41 @@ namespace mylibrary
                     }
                     comstr.Close();
                     return friend_User_And_Cm_Ids;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+
+        }
+        public List<Unfriended> Comm_Unfriended_List(string select)
+        {
+            List<Unfriended> unfriended_list = new List<Unfriended>();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(select, Conn);
+                var comstr = cmd.ExecuteReader();
+                if (comstr != null)
+                {
+                    while (comstr.Read())
+                    {
+                        string receiver_name;
+                        if (comstr.IsDBNull(1)) receiver_name = null;
+                        else receiver_name = comstr.GetString("receiver_name");
+                        Unfriended unfriended = new Unfriended(
+                            comstr.GetString("other_user"),
+                            receiver_name,
+                            comstr.GetString("status")
+                            );
+                        unfriended_list.Add(unfriended);
+                    }
+                    comstr.Close();
+                    return unfriended_list;
                 }
                 else
                 {

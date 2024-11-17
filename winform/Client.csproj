@@ -151,6 +151,12 @@
     <Compile Include="user_control\Chat_box_right.Designer.cs">
       <DependentUpon>Chat_box_right.cs</DependentUpon>
     </Compile>
+    <Compile Include="user_control\Unfriend.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="user_control\Unfriend.Designer.cs">
+      <DependentUpon>Unfriend.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form_login.resx">
       <DependentUpon>Form_login.cs</DependentUpon>
     </EmbeddedResource>
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="user_control\Chat_box_right.resx">
       <DependentUpon>Chat_box_right.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="user_control\Unfriend.resx">
+      <DependentUpon>Unfriend.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -214,6 +223,8 @@
   <ItemGroup>
     <None Include="Resources\send-message.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\people.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

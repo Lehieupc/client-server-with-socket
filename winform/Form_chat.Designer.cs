@@ -31,14 +31,13 @@
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2ControlBox3 = new Guna.UI2.WinForms.Guna2ControlBox();
-            this.guna2ControlBox2 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.guna2ControlBox1 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.friend_user = new Guna.UI2.WinForms.Guna2Panel();
-            this.ChatWord = new winform.user_control.Avatar();
             this.Main_user = new Guna.UI2.WinForms.Guna2Panel();
             this.seen_mess = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel4 = new Guna.UI2.WinForms.Guna2Panel();
+            this.guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.panel_chat = new Guna.UI2.WinForms.Guna2Panel();
@@ -48,11 +47,14 @@
             this.guna2Panel8 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Panel5 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.UnfriendedList = new Guna.UI2.WinForms.Guna2Panel();
+            this.ChatWord = new winform.user_control.Avatar();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.friend_user.SuspendLayout();
             this.Main_user.SuspendLayout();
             this.guna2Panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).BeginInit();
             this.guna2Panel3.SuspendLayout();
             this.panel_chat.SuspendLayout();
             this.guna2Panel6.SuspendLayout();
@@ -64,12 +66,11 @@
             this.guna2Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel1);
             this.guna2Panel1.Controls.Add(this.guna2ControlBox3);
-            this.guna2Panel1.Controls.Add(this.guna2ControlBox2);
             this.guna2Panel1.Controls.Add(this.guna2ControlBox1);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.guna2Panel1.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel1.Name = "guna2Panel1";
-            this.guna2Panel1.Size = new System.Drawing.Size(1260, 45);
+            this.guna2Panel1.Size = new System.Drawing.Size(1280, 45);
             this.guna2Panel1.TabIndex = 0;
             this.guna2Panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             this.guna2Panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
@@ -93,28 +94,17 @@
             this.guna2ControlBox3.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
             this.guna2ControlBox3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
             this.guna2ControlBox3.IconColor = System.Drawing.Color.White;
-            this.guna2ControlBox3.Location = new System.Drawing.Point(1117, 5);
+            this.guna2ControlBox3.Location = new System.Drawing.Point(1184, 5);
             this.guna2ControlBox3.Name = "guna2ControlBox3";
             this.guna2ControlBox3.Size = new System.Drawing.Size(45, 40);
             this.guna2ControlBox3.TabIndex = 2;
-            // 
-            // guna2ControlBox2
-            // 
-            this.guna2ControlBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2ControlBox2.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MaximizeBox;
-            this.guna2ControlBox2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
-            this.guna2ControlBox2.IconColor = System.Drawing.Color.White;
-            this.guna2ControlBox2.Location = new System.Drawing.Point(1168, 5);
-            this.guna2ControlBox2.Name = "guna2ControlBox2";
-            this.guna2ControlBox2.Size = new System.Drawing.Size(45, 40);
-            this.guna2ControlBox2.TabIndex = 1;
             // 
             // guna2ControlBox1
             // 
             this.guna2ControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2ControlBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
             this.guna2ControlBox1.IconColor = System.Drawing.Color.White;
-            this.guna2ControlBox1.Location = new System.Drawing.Point(1215, 5);
+            this.guna2ControlBox1.Location = new System.Drawing.Point(1235, 5);
             this.guna2ControlBox1.Name = "guna2ControlBox1";
             this.guna2ControlBox1.Size = new System.Drawing.Size(45, 40);
             this.guna2ControlBox1.TabIndex = 0;
@@ -135,27 +125,13 @@
             // friend_user
             // 
             this.friend_user.AutoScroll = true;
+            this.friend_user.Controls.Add(this.UnfriendedList);
             this.friend_user.Controls.Add(this.ChatWord);
             this.friend_user.Dock = System.Windows.Forms.DockStyle.Fill;
             this.friend_user.Location = new System.Drawing.Point(0, 58);
             this.friend_user.Name = "friend_user";
             this.friend_user.Size = new System.Drawing.Size(304, 602);
             this.friend_user.TabIndex = 6;
-            // 
-            // ChatWord
-            // 
-            this.ChatWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(57)))), ((int)(((byte)(63)))));
-            this.ChatWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ChatWord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ChatWord.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(53)))));
-            this.ChatWord.LabelName = "Name";
-            this.ChatWord.LabelStatus = "Status";
-            this.ChatWord.Location = new System.Drawing.Point(0, 0);
-            this.ChatWord.Name = "ChatWord";
-            this.ChatWord.Size = new System.Drawing.Size(278, 68);
-            this.ChatWord.TabIndex = 0;
-            this.ChatWord.Load += new System.EventHandler(this.ChatWord_Load);
-            this.ChatWord.Click += new System.EventHandler(this.ChatWord_Click);
             // 
             // Main_user
             // 
@@ -184,12 +160,28 @@
             // 
             // guna2Panel4
             // 
+            this.guna2Panel4.Controls.Add(this.guna2CirclePictureBox1);
             this.guna2Panel4.Controls.Add(this.label1);
             this.guna2Panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.guna2Panel4.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel4.Name = "guna2Panel4";
             this.guna2Panel4.Size = new System.Drawing.Size(304, 58);
             this.guna2Panel4.TabIndex = 3;
+            // 
+            // guna2CirclePictureBox1
+            // 
+            this.guna2CirclePictureBox1.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.guna2CirclePictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.guna2CirclePictureBox1.Image = global::winform.Properties.Resources.people;
+            this.guna2CirclePictureBox1.ImageRotate = 0F;
+            this.guna2CirclePictureBox1.Location = new System.Drawing.Point(259, 12);
+            this.guna2CirclePictureBox1.Name = "guna2CirclePictureBox1";
+            this.guna2CirclePictureBox1.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
+            this.guna2CirclePictureBox1.Size = new System.Drawing.Size(39, 36);
+            this.guna2CirclePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.guna2CirclePictureBox1.TabIndex = 1;
+            this.guna2CirclePictureBox1.TabStop = false;
+            this.guna2CirclePictureBox1.Click += new System.EventHandler(this.guna2CirclePictureBox1_Click);
             // 
             // label1
             // 
@@ -211,7 +203,7 @@
             this.guna2Panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel3.Location = new System.Drawing.Point(304, 45);
             this.guna2Panel3.Name = "guna2Panel3";
-            this.guna2Panel3.Size = new System.Drawing.Size(956, 730);
+            this.guna2Panel3.Size = new System.Drawing.Size(976, 730);
             this.guna2Panel3.TabIndex = 2;
             // 
             // panel_chat
@@ -221,15 +213,16 @@
             this.panel_chat.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_chat.Location = new System.Drawing.Point(0, 58);
             this.panel_chat.Name = "panel_chat";
-            this.panel_chat.Size = new System.Drawing.Size(956, 602);
+            this.panel_chat.Size = new System.Drawing.Size(976, 602);
             this.panel_chat.TabIndex = 2;
             // 
             // panel_chat_with_friend
             // 
+            this.panel_chat_with_friend.AutoScroll = true;
             this.panel_chat_with_friend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_chat_with_friend.Location = new System.Drawing.Point(0, 0);
             this.panel_chat_with_friend.Name = "panel_chat_with_friend";
-            this.panel_chat_with_friend.Size = new System.Drawing.Size(956, 602);
+            this.panel_chat_with_friend.Size = new System.Drawing.Size(976, 602);
             this.panel_chat_with_friend.TabIndex = 0;
             this.panel_chat_with_friend.Visible = false;
             // 
@@ -241,7 +234,7 @@
             this.guna2Panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.guna2Panel6.Location = new System.Drawing.Point(0, 0);
             this.guna2Panel6.Name = "guna2Panel6";
-            this.guna2Panel6.Size = new System.Drawing.Size(956, 58);
+            this.guna2Panel6.Size = new System.Drawing.Size(976, 58);
             this.guna2Panel6.TabIndex = 1;
             // 
             // mess_word
@@ -262,7 +255,7 @@
             this.guna2Panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.guna2Panel8.Location = new System.Drawing.Point(0, 56);
             this.guna2Panel8.Name = "guna2Panel8";
-            this.guna2Panel8.Size = new System.Drawing.Size(956, 2);
+            this.guna2Panel8.Size = new System.Drawing.Size(976, 2);
             this.guna2Panel8.TabIndex = 0;
             // 
             // guna2Panel5
@@ -271,7 +264,7 @@
             this.guna2Panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.guna2Panel5.Location = new System.Drawing.Point(0, 660);
             this.guna2Panel5.Name = "guna2Panel5";
-            this.guna2Panel5.Size = new System.Drawing.Size(956, 70);
+            this.guna2Panel5.Size = new System.Drawing.Size(976, 70);
             this.guna2Panel5.TabIndex = 0;
             // 
             // guna2TextBox1
@@ -295,15 +288,40 @@
             this.guna2TextBox1.PasswordChar = '\0';
             this.guna2TextBox1.PlaceholderText = "@Message";
             this.guna2TextBox1.SelectedText = "";
-            this.guna2TextBox1.Size = new System.Drawing.Size(948, 55);
+            this.guna2TextBox1.Size = new System.Drawing.Size(968, 55);
             this.guna2TextBox1.TabIndex = 0;
+            // 
+            // UnfriendedList
+            // 
+            this.UnfriendedList.AutoScroll = true;
+            this.UnfriendedList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UnfriendedList.Location = new System.Drawing.Point(0, 0);
+            this.UnfriendedList.Name = "UnfriendedList";
+            this.UnfriendedList.Size = new System.Drawing.Size(304, 602);
+            this.UnfriendedList.TabIndex = 3;
+            this.UnfriendedList.Visible = false;
+            // 
+            // ChatWord
+            // 
+            this.ChatWord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(57)))), ((int)(((byte)(63)))));
+            this.ChatWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ChatWord.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ChatWord.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(53)))));
+            this.ChatWord.LabelName = "Name";
+            this.ChatWord.LabelStatus = "Status";
+            this.ChatWord.Location = new System.Drawing.Point(0, 0);
+            this.ChatWord.Name = "ChatWord";
+            this.ChatWord.Size = new System.Drawing.Size(280, 68);
+            this.ChatWord.TabIndex = 2;
+            this.ChatWord.Load += new System.EventHandler(this.ChatWord_Load);
+            this.ChatWord.Click += new System.EventHandler(this.ChatWord_Click);
             // 
             // Form_chat
             // 
             this.AcceptButton = this.seen_mess;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1260, 775);
+            this.ClientSize = new System.Drawing.Size(1280, 775);
             this.Controls.Add(this.guna2Panel3);
             this.Controls.Add(this.guna2Panel2);
             this.Controls.Add(this.guna2Panel1);
@@ -320,6 +338,7 @@
             this.Main_user.ResumeLayout(false);
             this.guna2Panel4.ResumeLayout(false);
             this.guna2Panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).EndInit();
             this.guna2Panel3.ResumeLayout(false);
             this.panel_chat.ResumeLayout(false);
             this.guna2Panel6.ResumeLayout(false);
@@ -336,7 +355,6 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox3;
-        private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox2;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2Panel panel_chat;
@@ -350,6 +368,8 @@
         private Guna.UI2.WinForms.Guna2Panel Main_user;
         private Guna.UI2.WinForms.Guna2Button seen_mess;
         private Guna.UI2.WinForms.Guna2Panel panel_chat_with_friend;
+        private Guna.UI2.WinForms.Guna2CirclePictureBox guna2CirclePictureBox1;
+        private Guna.UI2.WinForms.Guna2Panel UnfriendedList;
         private user_control.Avatar ChatWord;
     }
 }

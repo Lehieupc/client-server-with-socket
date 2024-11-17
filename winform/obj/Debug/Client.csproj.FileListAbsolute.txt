@@ -56,3 +56,4 @@ D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\winform.user_contro
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\winform.user_control.Chat_box_right.resources
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\winform.Form_login.resources
 D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\winform.Form_SignUp.resources
+D:\LEHIEU\laptrinhmang\client-server_wf-cs\winform\obj\Debug\winform.user_control.Unfriend.resources
