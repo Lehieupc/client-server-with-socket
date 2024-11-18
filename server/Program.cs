@@ -137,7 +137,7 @@ namespace server
                     break;
                 case "cancel":
                     query_update_friendships = $@"update friendships set
-                    receiver_id = null),
+                    receiver_id = null,
                     status = 'blocked'
                     where
                     user_id = LEAST(
@@ -196,8 +196,8 @@ namespace server
                 FROM friendships AS f
                 JOIN users_account AS u1 ON f.user_id = u1.user_id
                 JOIN users_account AS u2 ON f.friend_id = u2.user_id
-                WHERE f.user_id = (SELECT user_id FROM users_account WHERE user_name = '{user_name}') 
-                   OR f.friend_id = (SELECT user_id FROM users_account WHERE user_name = '{user_name}');
+                WHERE (f.user_id = (SELECT user_id FROM users_account WHERE user_name = '{user_name}') 
+                   OR f.friend_id = (SELECT user_id FROM users_account WHERE user_name = '{user_name}')) and f.status != 'accepted';
             ";
             return database.Comm_Unfriended_List(select_friendships);
         }

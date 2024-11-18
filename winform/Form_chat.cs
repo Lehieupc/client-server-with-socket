@@ -125,6 +125,7 @@ namespace winform
             {
                 SendMess($"friendship|accept|{user.User_name}|{unfriend.LabelName}");
                 UnfriendedList.Controls.Remove(unfriend);
+                SendMess(user.User_name);
             };
             UnfriendedList.Controls.Add(unfriend);
         }
